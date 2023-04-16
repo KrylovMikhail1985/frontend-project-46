@@ -1,6 +1,7 @@
 {
   "name": "@hexlet/code",
   "version": "1.0.0",
+  "type": "module",
   "description": "[![Actions Status](https://github.com/KrylovMikhail1985/frontend-project-46/workflows/hexlet-check/badge.svg)](https://github.com/KrylovMikhail1985/frontend-project-46/actions)",
   "main": "gendiff.js",
   "scripts": {
@@ -12,7 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "commander": "^10.0.0"
+    "commander": "^10.0.0",
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
     "eslint": "^8.38.0",
