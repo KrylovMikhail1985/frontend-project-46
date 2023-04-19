@@ -17,14 +17,12 @@ const valueByKey = (array, key) => {
       result = value;
     }
   });
-  return result;
+  return result
 };
 
 const compareJSON = (obj1, obj2) => {
-  const array1 = Object.entries(obj1);
-  const array2 = Object.entries(obj2);
-  array1.sort();
-  array2.sort();
+  const array1 = Object.entries(obj1).sort();
+  const array2 = Object.entries(obj2).sort();
   const result = ['{'];
   array1.forEach((pair) => {
     const [key, value] = pair;
