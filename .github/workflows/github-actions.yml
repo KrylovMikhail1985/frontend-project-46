@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: GitHub Actions
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
@@ -22,7 +22,7 @@ jobs:
       - name: Test & publish code coverage
         uses: paambaati/codeclimate-action@v3.2.0
         env:
-          CC_TEST_REPORTER_ID: ${CODE_CLIMATE_REPORTER_ID}
+          CC_TEST_REPORTER_ID: ${{CODE_CLIMATE_REPORTER_ID}}
         with:
           coverageCommand: npx jest --coverage
           coverageLocations: |
