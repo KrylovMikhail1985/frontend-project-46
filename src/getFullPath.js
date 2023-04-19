@@ -1,5 +1,10 @@
-//  import _ from 'lodash'
+import _ from 'lodash';
 import path from 'path';
 
-export default (currentPath) => path.resolve(currentPath);
+export default (currentPath) => {
+  if (_.startsWith(currentPath, '.') || _.startsWith(currentPath, '/')) {
+    return currentPath;
+  }
+  return path.resolve('files', currentPath);
+};
 //  module.exports = getFullPath;

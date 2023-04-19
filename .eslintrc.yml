@@ -1,7 +1,10 @@
+plugins:
+  # https://github.com/jest-community/eslint-plugin-jest
+  - jest
+
 env:
-  browser: true
-  commonjs: true
-  es2021: true
+  node: true
+
 #extends: eslint:recommended
 overrides: []
 parserOptions:
@@ -14,4 +17,4 @@ rules:
     - js: always
 extends:
   - 'airbnb-base'
-#  - 'plugin:jest/recommended'
+  - 'plugin:jest/recommended'
