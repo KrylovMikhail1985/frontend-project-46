@@ -17,7 +17,7 @@ const valueByKey = (array, key) => {
       result = value;
     }
   });
-  return result
+  return result;
 };
 
 const compareJSON = (obj1, obj2) => {
