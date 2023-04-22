@@ -2,8 +2,8 @@
 
 import { Command } from 'commander';
 import getFullPath from './src/getFullPath.js';
-import readFile from './src/workingWithFiles.js';
-import compareJSON from './src/compareTwoFiles.js';
+import compareTwoFiles from './src/compareTwoFiles.js';
+import parsers from './src/parsers.js';
 // const { version } = require('./package.json');
 // const getFullPath = require('./src/getFullPath.js');
 
@@ -18,12 +18,10 @@ program
   .argument('<path2>', 'path for file2')
   .action((path1, path2) => {
     const fullPath1 = getFullPath(path1);
-    const file1Text = readFile(fullPath1);
-    const obj1 = JSON.parse(file1Text);
+    const obj1 = parsers(fullPath1);
     const fullPath2 = getFullPath(path2);
-    const file2Text = readFile(fullPath2);
-    const obj2 = JSON.parse(file2Text);
-    const result = compareJSON(obj1, obj2);
+    const obj2 = parsers(fullPath2);
+    const result = compareTwoFiles(obj1, obj2);
     console.log(result);
   });
 

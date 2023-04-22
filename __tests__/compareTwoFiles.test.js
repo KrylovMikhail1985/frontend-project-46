@@ -2,22 +2,37 @@
 
 import getFullPath from '../src/getFullPath.js';
 import readFile from '../src/workingWithFiles.js';
-import compareJSON from '../src/compareTwoFiles.js';
+import compareTwoFiles from '../src/compareTwoFiles.js';
+import parsers from '../src/parsers.js';
 
-test('compareTwoFiles', () => {
+test('compareTwoFiles_JSON', () => {
   const path1 = './__fixtures__/file1.json';
   const path2 = './__fixtures__/file2.json';
 
   const fullPath1 = getFullPath(path1);
-  const file1Text = readFile(fullPath1);
-  const obj1 = JSON.parse(file1Text);
+  const obj1 = parsers(fullPath1);
 
   const fullPath2 = getFullPath(path2);
-  const file2Text = readFile(fullPath2);
-  const obj2 = JSON.parse(file2Text);
+  const obj2 = parsers(fullPath2);
 
   const rightResult = readFile('./__fixtures__/file1CompareFile2');
 
-  const currentResult = compareJSON(obj1, obj2);
+  const currentResult = compareTwoFiles(obj1, obj2);
+  expect(currentResult).toEqual(rightResult);
+});
+
+test('compareTwoFiles_YAML', () => {
+  const path1 = './__fixtures__/file3.yaml';
+  const path2 = './__fixtures__/file4.yml';
+
+  const fullPath1 = getFullPath(path1);
+  const obj1 = parsers(fullPath1);
+
+  const fullPath2 = getFullPath(path2);
+  const obj2 = parsers(fullPath2);
+
+  const rightResult = readFile('./__fixtures__/file1CompareFile2');
+
+  const currentResult = compareTwoFiles(obj1, obj2);
   expect(currentResult).toEqual(rightResult);
 });
