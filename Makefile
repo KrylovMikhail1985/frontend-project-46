@@ -5,7 +5,7 @@ install: install-deps
 #	bin/nodejs-package.js 10
 #
 run:
-	node gendiff.js ./files/file1.json ./files/file2.json
+	node index.js ./files/file1.json ./files/file2.json
 
 install-deps:
 	npm ci
