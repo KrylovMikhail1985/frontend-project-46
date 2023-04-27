@@ -1,14 +1,6 @@
 import _ from 'lodash';
 
-const arrayHasSuchPair = (array, pair) => {
-  let result = false;
-  array.forEach((thisPair) => {
-    if (_.isEqual(thisPair, pair)) {
-      result = true;
-    }
-  });
-  return result;
-};
+import hasNested from './hasNested.js';
 
 const valueByKey = (array, key) => {
   let result = NaN;
@@ -20,30 +12,41 @@ const valueByKey = (array, key) => {
   return result;
 };
 
-const compareJSON = (obj1, obj2) => {
+const compare = (obj1, obj2, nested = 0) => {
   const array1 = Object.entries(obj1).sort();
   const array2 = Object.entries(obj2).sort();
-  const result = ['{'];
-  array1.forEach((pair) => {
-    const [key, value] = pair;
-    const valueOtherArray = valueByKey(array2, key);
-    if (arrayHasSuchPair(array2, pair)) {
-      result.push(`    ${key}: ${value}`);
-    } else if (valueOtherArray) {
-      result.push(`  - ${key}: ${value}`);
-      result.push(`  + ${key}: ${valueOtherArray}`);
+  const keys1 = Object.keys(obj1);
+  const keys2 = Object.keys(obj2);
+  const arrayOfKeys = _.union(keys1, keys2).sort();
+  const result = [];
+  arrayOfKeys.forEach((key) => {
+    const value1 = valueByKey(array1, key);
+    const value2 = valueByKey(array2, key);
+    if (hasNested(value1) && hasNested(value2)) {
+      result.push({
+        nested, change: ' ', key, value: compare(value1, value2, nested + 1),
+      });
+    } else if (_.isEqual(value1, value2)) {
+      result.push({
+        nested, change: ' ', key, value: value1,
+      });
+    } else if (!_.isNaN(value1) && !_.isNaN(value2)) {
+      result.push({
+        nested, change: '-', key, value: value1,
+      });
+      result.push({
+        nested, change: '+', key, value: value2,
+      });
+    } else if (!_.isNaN(value1)) {
+      result.push({
+        nested, change: '-', key, value: value1,
+      });
     } else {
-      result.push(`  - ${key}: ${value}`);
+      result.push({
+        nested, change: '+', key, value: value2,
+      });
     }
   });
-  array2.forEach((pair) => {
-    const [key, value] = pair;
-    const valueOtherArray = valueByKey(array1, key);
-    if (!valueOtherArray) {
-      result.push(`  + ${key}: ${value}`);
-    }
-  });
-  result.push('}');
-  return result.join('\n');
+  return result;
 };
-export default compareJSON;
+export default compare;
