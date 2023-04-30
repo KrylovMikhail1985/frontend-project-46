@@ -5,7 +5,7 @@ install: install-deps
 #	bin/nodejs-package.js 10
 #
 run:
-	node index.js ./files/file1.json ./files/file2.json
+	node index.js --format plain ./files/file1.json ./files/file2.json
 
 install-deps:
 	npm ci

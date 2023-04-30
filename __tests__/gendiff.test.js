@@ -5,6 +5,7 @@ import gendiff from '../bin/gendiff.js';
 
 const rightResult = fs.readFileSync('./__fixtures__/file1CompareFile2', 'utf8');
 const rightResult2 = fs.readFileSync('./__fixtures__/file11CompareFile22', 'utf8');
+const rightResultPlain = fs.readFileSync('./__fixtures__/file11CompareFile22Plain', 'utf8');
 
 test('compareTwoFiles_JSON', () => {
   const path1 = './__fixtures__/file1.json';
@@ -28,4 +29,12 @@ test('compareTwoFiles_YAML', () => {
 
   const currentResult = gendiff(path3, path4);
   expect(currentResult).toEqual(rightResult);
+});
+
+test('compareTwoFiles_Playn', () => {
+  const path5 = './__fixtures__/file11.json';
+  const path6 = './__fixtures__/file22.json';
+
+  const currentResult = gendiff(path5, path6, 'plain');
+  expect(currentResult).toEqual(rightResultPlain);
 });

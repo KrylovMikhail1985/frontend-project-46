@@ -31,11 +31,15 @@ const compare = (obj1, obj2, nested = 0) => {
         nested, change: ' ', key, value: value1,
       });
     } else if (!_.isNaN(value1) && !_.isNaN(value2)) {
-      result.push({
+      const array = [];
+      array.push({
         nested, change: '-', key, value: value1,
       });
-      result.push({
+      array.push({
         nested, change: '+', key, value: value2,
+      });
+      result.push({
+        nested, change: 'yes', key, value: array,
       });
     } else if (!_.isNaN(value1)) {
       result.push({
