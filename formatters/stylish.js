@@ -58,7 +58,11 @@ const stylish = (diffInArray) => {
       //    } else if (_.isEqual(element.value, '')) {
       //      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}`);
     } else {
-      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}: ${element.value}`);
+      if (_.isEqual(element.value, '')) {
+        result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}:`);
+      } else {
+        result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}: ${element.value}`);
+      }
     }
   });
   result.push('}');
