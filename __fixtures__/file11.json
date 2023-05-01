@@ -6,12 +6,12 @@
     "setting6": {
       "key": "value",
       "doge": {
-        "wow": ""
+        "wow": "123"
       }
     }
   },
   "group1": {
-    "baz": "",
+    "baz": "123",
     "foo": "bar",
     "nest": {
       "key": "value"

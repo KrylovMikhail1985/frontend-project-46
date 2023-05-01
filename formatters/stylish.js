@@ -32,8 +32,8 @@ const compareInner = (nested, key, value, change = ' ') => {
       //      result.push(compareInner(element.nested, element.key, element.value));
     } else if (hasNested(element.value)) {
       result.push(showInner(element.nested, element.key, element.value, element.change));
-    } else if (_.isEqual(element.value, '')) {
-      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}:`);
+      //    } else if (_.isEqual(element.value, '')) {
+      //      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}:`);
     } else {
       result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}: ${element.value}`);
     }
@@ -58,11 +58,7 @@ const stylish = (diffInArray) => {
       //    } else if (_.isEqual(element.value, '')) {
       //      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}`);
     } else {
-      if (_.isEqual(element.value, '')) {
-        result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}:`);
-      } else {
-        result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}: ${element.value}`);
-      }
+      result.push(`  ${(' ').repeat(element.nested * 4)}${element.change} ${element.key}: ${element.value}`);
     }
   });
   result.push('}');

@@ -11,7 +11,7 @@
         }
         setting6: {
             doge: {
-              - wow:
+              - wow: 123
               + wow: so much
             }
             key: value
@@ -19,7 +19,7 @@
         }
     }
     group1: {
-      - baz:
+      - baz: 123
       + baz: bars
         foo: bar
       - nest: {
