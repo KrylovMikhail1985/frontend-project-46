@@ -3,7 +3,8 @@ import _ from 'lodash';
 import hasNested from '../src/hasNested.js';
 
 const getRightAppearanceOfValue = (value) => {
-  if (_.isEqual(value, null) || _.isEqual(value, false) || _.isEqual(value, true) || _.isNumber(value)) {
+  if (_.isEqual(value, null) || _.isEqual(value, false) || _.isEqual(value, true)
+  || _.isNumber(value)) {
     return value;
   }
   if (hasNested(value)) {
