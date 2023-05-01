@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import fs from 'fs';
-import gendiff from '../bin/gendiff.js';
+import gendiff from '../bin/index.js';
 
 const rightResult = fs.readFileSync('./__fixtures__/file1CompareFile2', 'utf8');
 const rightResult2 = fs.readFileSync('./__fixtures__/file11CompareFile22', 'utf8');
