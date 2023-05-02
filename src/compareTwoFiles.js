@@ -1,55 +1,26 @@
 import _ from 'lodash';
 
-import hasNested from './hasNested.js';
-
-const valueByKey = (array, key) => {
-  let result = NaN;
-  array.forEach(([key2, value]) => {
-    if (_.isEqual(key, key2)) {
-      result = value;
-    }
-  });
-  return result;
-};
-
-const compare = (obj1, obj2, nested = 0) => {
-  const array1 = Object.entries(obj1).sort();
-  const array2 = Object.entries(obj2).sort();
+const compare = (obj1, obj2) => {
+  const keys = Object.keys({ ...obj1, ...obj2 });
+  const sortedKeys = _.sortBy(keys);
   const keys1 = Object.keys(obj1);
   const keys2 = Object.keys(obj2);
-  const arrayOfKeys = _.union(keys1, keys2).sort();
-  const result = [];
-  arrayOfKeys.forEach((key) => {
-    const value1 = valueByKey(array1, key);
-    const value2 = valueByKey(array2, key);
-    if (hasNested(value1) && hasNested(value2)) {
-      result.push({
-        nested, change: ' ', key, value: compare(value1, value2, nested + 1),
-      });
-    } else if (_.isEqual(value1, value2)) {
-      result.push({
-        nested, change: ' ', key, value: value1,
-      });
-    } else if (!_.isNaN(value1) && !_.isNaN(value2)) {
-      const array = [];
-      array.push({
-        nested, change: '-', key, value: value1,
-      });
-      array.push({
-        nested, change: '+', key, value: value2,
-      });
-      result.push({
-        nested, change: 'yes', key, value: array,
-      });
-    } else if (!_.isNaN(value1)) {
-      result.push({
-        nested, change: '-', key, value: value1,
-      });
-    } else {
-      result.push({
-        nested, change: '+', key, value: value2,
-      });
+  const result = sortedKeys.map((key) => {
+    if (!keys1.includes(key)) {
+      return { key, status: 'added', value: obj2[key] };
     }
+    if (!keys2.includes(key)) {
+      return { key, status: 'removed', value: obj1[key] };
+    }
+    if (_.isEqual(obj1[key], obj2[key])) {
+      return { key, status: 'same', value: obj1[key] };
+    }
+    if (_.isObject(obj1[key]) && _.isObject(obj2[key])) {
+      return { key, status: 'node', children: compare(obj1[key], obj2[key]) };
+    }
+    return {
+      key, status: 'updated', value1: obj1[key], value2: obj2[key],
+    };
   });
   return result;
 };

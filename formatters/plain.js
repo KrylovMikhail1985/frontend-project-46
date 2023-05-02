@@ -14,19 +14,24 @@ const getRightAppearanceOfValue = (value) => {
 };
 
 const plain = (diffInArray, prefix = '') => {
-  const result = [];
-  diffInArray.forEach((element) => {
-    if (_.isArray(element.value) && _.isEqual((element.change), ' ')) {
-      result.push(plain(element.value, `${prefix}${element.key}.`));
-    } else if (_.isArray(element.value) && _.isEqual((element.change), 'yes')) {
-      const [el1, el2] = element.value;
-      result.push(`Property '${prefix}${element.key}' was updated. From ${getRightAppearanceOfValue(el1.value)} to ${getRightAppearanceOfValue(el2.value)}`);
-    } else if (_.isEqual((element.change), '-')) {
-      result.push(`Property '${prefix}${element.key}' was removed`);
-    } else if (_.isEqual((element.change), '+')) {
-      result.push(`Property '${prefix}${element.key}' was added with value: ${getRightAppearanceOfValue(element.value)}`);
+  const text = diffInArray.map((element) => {
+    switch (element.status) {
+      case 'added':
+        return `Property '${prefix}${element.key}' was added with value: ${getRightAppearanceOfValue(element.value)}`;
+      case 'removed':
+        return `Property '${prefix}${element.key}' was removed`;
+      case 'updated': {
+        const f = `Property '${prefix}${element.key}' was updated. From ${getRightAppearanceOfValue(element.value1)} `;
+        const s = `to ${getRightAppearanceOfValue(element.value2)}`;
+        return `${f}${s}`;
+      }
+      case 'node':
+        return plain(element.children, `${prefix}${element.key}.`);
+      default:
+        return null;
     }
   });
+  const result = text.filter((str) => !_.isNull(str));
   return result.join('\n');
 };
 
